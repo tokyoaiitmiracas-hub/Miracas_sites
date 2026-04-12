@@ -15,6 +15,8 @@ const teamData = {
   I: ["清水晃聖","市川依武生","迎陽菜","亀ケ澤碧","シュウ","田中優哉"]
 };
 
+export { teamData };
+
 const teamOrder = ["T","K","A","I"];
 
 const result = document.getElementById("teamResult");

@@ -94,18 +94,38 @@ window.addEventListener("DOMContentLoaded", () => {
       profileName.textContent = user.email;
     }
 
-    /* ===============================
-      captainページ表示
-    ================================ */
+    // /* ===============================
+    //   captainページ表示
+    // ================================ */
 
-    if (canOpenCaptain(user.email) && sidebar) {
+    // if (canOpenCaptain(user.email) && sidebar) {
+
+    //   if (!document.getElementById("captainIcon")) {
+
+    //     const a = document.createElement("a");
+    //     a.id = "captainIcon";
+    //     a.href = "captain.html";
+    //     a.title = "一部キャスト専用";
+
+    //     const img = document.createElement("img");
+    //     img.src = "icons/report.png";
+
+    //     a.appendChild(img);
+    //     sidebar.appendChild(a);
+    //   }
+
+    // }
+    
+    /* captainページ表示 */
+    //全員アクセス用//
+    if (sidebar) {
 
       if (!document.getElementById("captainIcon")) {
 
         const a = document.createElement("a");
         a.id = "captainIcon";
         a.href = "captain.html";
-        a.title = "一部キャスト専用";
+        a.title = "レポート";
 
         const img = document.createElement("img");
         img.src = "icons/report.png";
@@ -115,7 +135,7 @@ window.addEventListener("DOMContentLoaded", () => {
       }
 
     }
-    
+
     /* 管理者アイコン */
     if (isAdmin(user.email) && sidebar) {
 
