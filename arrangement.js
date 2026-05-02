@@ -9,15 +9,16 @@ import {
 const docRef = doc(db, "arrangements", "current");
 
 const teamData = {
-  T: ["渡部羽空","藤井蒼太","藤本英里"],
-  K: ["石戸巧巳"],
-  A: ["溝田莉子"],
-  I: ["清水晃聖"]
+  2: ["渡部羽空","藤井蒼太","藤本英里","石戸巧巳","溝田莉子","清水晃聖"],
+  T: ["本橋廉土","安藤快","細田奈々","巳瑠聖","大間彩叶","渡辺景太","染谷いおり","山口綾太"],
+  K: ["高木愁","叶千優","渡辺心菜","鈴木優成","平山遥斗","大鈴淳平","大幡朝陽","安藤愛美"],
+  A: ["兵頭奈優","石川陽菜","中島伶惟","染谷悠斗","河原璃旺","妹尾淳一","ライユウション","阿部龍夏"],
+  I: ["泉哲平","平山頼生","土屋秀俊","小森寛汰","鈴木結衣","石原蒼空","結城ひより","滝谷唯音"]
 };
 
 export { teamData };
 
-const teamOrder = ["T","K","A","I"];
+const teamOrder = ["2","T","K","A","I"];
 
 const result = document.getElementById("teamResult");
 
@@ -243,7 +244,7 @@ function createMember(name,parent){
   // 🔥 チーム判定（先頭1文字）
   const team = name.charAt(0);
 
-  if(["T","K","A","I"].includes(team)){
+  if(["2","T","K","A","I"].includes(team)){
     div.classList.add("team-" + team);
   }
 
