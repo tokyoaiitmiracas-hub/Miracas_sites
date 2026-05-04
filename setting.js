@@ -8,7 +8,8 @@ import {
     getDocs,
     deleteDoc,
     query,
-    orderBy
+    orderBy,
+    where
 } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
 import {
@@ -174,9 +175,11 @@ window.addEventListener("DOMContentLoaded", async () => {
 async function loadLoginLogs(){
 
     const logList = document.getElementById("logList");
+    const startDate = new Date("2026-05-01T00:00:00Z"); // 2026年5月1日以降のログを取得　全期間のログが必要な場合はこの行を削除して
 
     const q = query(
         collection(db,"loginLogs"),
+        where("timestamp", ">=", startDate), // 2026年5月1日以降のログを取得　全期間のログが必要な場合はこの行を削除して
         orderBy("timestamp","desc")
     );
 
