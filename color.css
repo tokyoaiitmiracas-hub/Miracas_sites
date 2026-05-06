@@ -12,7 +12,7 @@
 .team-K{ background:#66ccff; }  /* オレンジ */
 .team-A{ background:#cc66ff; }  /* 緑 */
 .team-I{ background:#99ff66; }  /* 紫 */
-.team-2{ background:#ff66cc; }  /* ピンク */
+.team-2{ background:#fffb14; }  /* 黄色 */
 
 /* ===== 教室ごとの背景 ===== */
 .class-box[data-room="受付"]{
