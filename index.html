@@ -257,7 +257,10 @@ svg.key {
 <!-- include in a container a heading, paragraph and svg for the keyhole -->
 <div class="container">
   <h1>404</h1>
-  <p>access not granted</p>
+  <span>The page you requested could not be found.</span><br>
+  <span>This page has been closed</span><br><br>
+  <span>Thank you for everything so far!😂</span><br>
+  <p>See you again</p>
   <svg class="keyhole">
     <use href="#keyhole"/>
   </svg>
@@ -348,7 +351,7 @@ const grantAccess = () => {
   key.parentElement.parentElement.style.cursor = "default";
 
   // change the text of the heading and paragraph elements
-  heading.textContent = '🎉 yay 🎉';
+  heading.textContent = '🎉 Happy 🎉';
   paragraph.textContent = 'access granted';
 
   // remove the svg elements for the key and keywhole from the flow of the document
