@@ -1,0 +1,154 @@
+/* =========================
+   全体設定
+========================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body.login-page {
+    height: 100dvh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-family: "Segoe UI", "Hiragino Kaku Gothic ProN", sans-serif;
+
+    /* 🔥 中央対称 白→青→白 */
+    background: linear-gradient(
+        90deg,
+        #ffffff 0%,
+        #e6f0ff 20%,
+        #93acf5 50%,
+        #e6f0ff 80%,
+        #ffffff 100%
+    );
+
+    overflow: hidden;
+}
+
+/* =========================
+   ログインボックス
+========================= */
+.login-box {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 50px 40px;
+    border-radius: 18px;
+
+    width: 340px;
+    text-align: center;
+
+    box-shadow: 0 20px 45px rgba(0,0,0,0.15);
+    animation: fadeIn 0.8s ease;
+
+    z-index:1500;
+}
+
+/* タイトル */
+.login-box h1 {
+    font-size: 22px;
+    margin-bottom: 40px;
+    letter-spacing: 1px;
+    color: #2c3e50;
+}
+
+/* =========================
+   Googleボタン
+========================= */
+.google-btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+
+    background: #4e73df;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.google-btn:hover {
+    background: #2e59d9;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.google-btn:active {
+    transform: scale(0.98);
+}
+
+/* =========================
+   エラー表示
+========================= */
+.error {
+    margin-top: 20px;
+    color: #d9534f;
+    font-size: 14px;
+}
+
+/* =========================
+   アニメーション
+========================= */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ロゴ画像 */
+.login-logo {
+    width: 90px;
+    margin-bottom: 20px;
+}
+
+.site-footer {
+  width: 100%;             /* 横幅いっぱいに広げる */
+  text-align: center;       /* 文字を中央寄せ */
+  font-size: 0.8rem;
+  color: #888;
+  padding: 20px 10px;
+  border-top: 1px solid #ccc;
+  position: fixed;          /* 常に画面下に表示 */
+  bottom: 0;                /* 下端に固定 */
+  left: 0;                  /* 左端から開始 */
+  background-color: #e3e3e374;   /* 背景色をつけると重なる要素でも見える */
+  box-shadow: 0 -1px 5px rgba(0,0,0,0.1); /* 軽い影で浮いた感じ */
+  z-index: 1000;            /* 他の要素より上に表示 */
+}
+
+/* =========================
+   Googleボタン
+========================= */
+.form-btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+
+    background: #a439fc;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.form-btn:hover {
+    background: #8a2be2;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.form-btn:active {
+    transform: scale(0.98);
+}

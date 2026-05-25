@@ -1,0 +1,338 @@
+/* =====================================================
+   📱 OC運営システム 完全スマホ最適化
+   iPhoneベース設計
+===================================================== */
+
+@media (max-width: 1000px){
+
+body:not(.captain-page){
+    font-size:15px;
+    zoom:1.8;
+}
+
+/* ===== ヘッダー ===== */
+.topbar{
+    height:55px;
+    padding:0 12px;
+}
+
+.topbar h1{
+    font-size:25px;
+}
+
+.header-clock{
+    display:none;
+}
+
+/* ===== サイドバー → 下部ナビ化 ===== */
+.sidebar{
+    position:fixed;
+    bottom:0;
+    top:auto;
+    width:100%;
+    height:80px;
+    flex-direction:row;
+    justify-content:space-around;
+    align-items:center;
+    padding:0;
+    background:#2c3e50;
+    z-index:2000;
+}
+
+.sidebar a{
+    margin:0;
+    width:45px;
+    height:45px;
+}
+
+.sidebar a img{
+    width:35px;
+    height:35px;
+}
+
+/* ===== ページ余白調整 ===== */
+.page,
+.main{
+    margin-left:0 !important;
+    margin-top:55px;
+    margin-bottom:70px;
+}
+
+.menu-toggle{
+    display:none;
+}
+
+/* ===== レイアウト縦化 ===== */
+.layout,
+.chat-layout,
+.arrangement-wrapper{
+    flex-direction:column;
+}
+
+/* =====================================================
+   💬 チャット画面
+===================================================== */
+
+.user-panel{
+    width:100%;
+    border-right:none;
+    border-bottom:1px solid #ddd;
+    max-height:160px;
+    overflow-y:auto;
+    padding:10px;
+}
+
+.user-buttons{
+    grid-template-columns:1fr 1fr;
+    gap:6px;
+}
+
+.user-buttons button{
+    padding:8px;
+    font-size:13px;
+}
+
+.current{
+    font-size:14px;
+}
+
+.chat-box{
+    width:100%;
+}
+
+.chat-layout{
+    display:flex;
+    flex-direction:column;
+    height:calc(100vh - 55px - 80px); 
+    /* ヘッダー55px + 下ナビ80pxを引く */
+}
+
+.chat-panel{
+    display:flex;
+    flex-direction:column;
+    flex:1;
+    min-height:0;
+}
+
+.chat-log{
+    flex:1;
+    overflow-y:auto;
+    padding:10px;
+}
+
+.chat-input{
+    background:white;
+    padding:10px;
+    border-top:1px solid #ddd;
+    width:100%;
+}
+
+.chat-input input{
+    font-size:16px;
+}
+
+.chat-input button{
+    width:80px;
+    font-size:14px;
+}
+
+/* トグルヘッダー表示 */
+.user-toggle-header{
+    background:#2b7cff;
+    color:white;
+    padding:12px;
+    text-align:center;
+    font-weight:bold;
+    border-radius:8px;
+    margin-bottom:10px;
+    cursor:pointer;
+}
+
+/* 折りたたみ初期状態 */
+.user-panel-body{
+    display:none;
+}
+
+/* 開いた時 */
+.user-panel-body.open{
+    display:block;
+}
+
+/* =====================================================
+   🏠 ホーム
+===================================================== */
+
+.shortcut{
+    flex-direction:column;
+    gap:12px;
+}
+
+.shortcut .card{
+    width:95%;
+    height:90px;
+    flex-direction:row;
+    justify-content:flex-start;
+    padding:10px 15px;
+}
+
+.shortcut .card img{
+    width:40px;
+    height:40px;
+    margin-right:15px;
+}
+
+.clock-area{
+    display:none;
+}
+
+/* =====================================================
+   📄 座席表 / 当日名簿
+===================================================== */
+
+.data-source-box{
+    display:none;
+    flex-direction:column;
+    gap:10px;
+}
+
+.data-source-box input{
+    display:none;
+}
+
+.sheet-frame iframe{
+    height:60vh;
+}
+
+/* テーブル横スクロール */
+.table-wrapper{
+    overflow-x:auto;
+}
+
+/* =====================================================
+   👑 管理者画面
+===================================================== */
+
+.container{
+    width:95%;
+    padding:15px;
+}
+
+.setting-box{
+    margin-bottom:20px;
+}
+
+.log-box{
+    max-height:250px;
+    font-size:13px;
+}
+
+/* =====================================================
+   🏫 配置図
+===================================================== */
+
+.left-panel{
+    width:100%;
+    display:none;
+}
+
+.class-area{
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.class-box{
+    width:100%;
+    font-size:14px;
+    display: block;
+}
+
+/* =====================================================
+   🪟 モーダル
+===================================================== */
+
+.notice-popup,
+.notice-modal{
+    width:95%;
+    padding:20px;
+}
+
+.notice-header h2{
+    font-size:22px;
+}
+
+.notice-preview{
+    font-size:15px;
+}
+
+.notice-editor{
+    font-size:15px;
+}
+
+/* =====================================================
+   👤 プロフィールメニュー
+===================================================== */
+
+.profile-menu{
+    right:10px;
+    width:200px;
+}
+
+/* スクロールバー消す（iPhone用） */
+::-webkit-scrollbar{
+    display:none;
+}
+
+.class-area {
+    display: block;
+}
+
+.oc-frame{
+    width:100%;
+}
+
+.review-box{
+  position:static;
+  width:95%;
+  margin-top:12px;
+
+  background:white;
+  border-radius:14px;
+  padding:16px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.08);
+
+  height:auto;
+}
+
+.review-title{
+  font-size:15px;
+  font-weight:bold;
+  margin-bottom:10px;
+  margin-block:0px;
+}
+
+
+.review-boxpc,.review-titlepc{
+    display:none;
+}
+
+.stamp-btn{
+  font-size:22px;
+  background:none;
+  border:none;
+  cursor:pointer;
+  top:95.5%;
+  position:absolute;
+  z-index:10;
+  right:10%;
+}
+}
+
+.stamp-picker{
+  right:10%;
+}
+
+@media (min-width: 1000px){
+    .review-box,.review-title{
+    display:none;
+}
+}
