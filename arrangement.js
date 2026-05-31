@@ -51,18 +51,26 @@ async function loadTeamsAndMembers(){
 
   orderedMemberList.length = 0;
 
+teamOrder.forEach(team=>{
+
+  if(!teamData[team]) return;
+
+  teamData[team].forEach(name=>{
+
+    orderedMemberList.push(
+      team + " " + name
+    );
+
+  });
+
+});
+
 }
 
 moveAbsenceBox();
 
 window.addEventListener("resize", ()=>{
   moveAbsenceBox();
-});
-
-teamOrder.forEach(team=>{
-  teamData[team].forEach(name=>{
-    orderedMemberList.push(team + " " + name);
-  });
 });
 
 /* =========================
