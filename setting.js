@@ -528,20 +528,33 @@ saveReactionsBtn?.addEventListener("click", async () => {
 
 // 初期読み込み
 loadReactions();
+
 /* ===============================
    管理者管理
 ================================ */
 
 async function loadAdminList(){
 
+    console.log("管理者一覧読み込み開始");
+
     const select = document.getElementById("adminSelect");
+
+    console.log("select =", select);
+
     if(!select) return;
 
     const snap = await getDoc(doc(db,"settings","admins"));
 
-    if(!snap.exists()) return;
+    console.log("exists =", snap.exists());
+
+    if(!snap.exists()){
+        console.log("settings/admins が存在しません");
+        return;
+    }
 
     const emails = snap.data().emails || [];
+
+    console.log("emails =", emails);
 
     select.innerHTML = "";
 
