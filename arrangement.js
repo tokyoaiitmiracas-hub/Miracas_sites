@@ -12,7 +12,7 @@ const docRef = doc(db, "arrangements", "current");
 
 const teamData = {};
 
-export { teamData };
+/*export { teamData };*/
 
 let teamOrder = [];
 
