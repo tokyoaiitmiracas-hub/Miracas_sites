@@ -719,3 +719,141 @@ document.getElementById("removeAdminBtn")?.addEventListener("click", async ()=>{
 });
 
 loadAdminList();
+
+/* ===============================
+   バックアップ作成
+================================ */
+
+document.getElementById("backupBtn")
+?.addEventListener("click", async ()=>{
+
+    try{
+
+        const backup = {};
+
+        const collections = [
+            "settings",
+            "users",
+            "arrangements",
+            "homeNotices"
+        ];
+
+        for(const col of collections){
+
+            const snap =
+            await getDocs(collection(db,col));
+
+            backup[col] = [];
+
+            snap.forEach(docSnap=>{
+
+                backup[col].push({
+                    id: docSnap.id,
+                    data: docSnap.data()
+                });
+
+            });
+
+        }
+
+        const blob = new Blob(
+            [JSON.stringify(backup,null,2)],
+            {
+                type:"application/json"
+            }
+        );
+
+        const url =
+        URL.createObjectURL(blob);
+
+        const a =
+        document.createElement("a");
+
+        a.href = url;
+
+        a.download =
+        `miracas-backup-${
+            new Date()
+            .toISOString()
+            .slice(0,10)
+        }.json`;
+
+        a.click();
+
+        URL.revokeObjectURL(url);
+
+        alert("バックアップを保存しました");
+
+    }catch(e){
+
+        console.error(e);
+
+        alert(
+            "バックアップ失敗: "
+            + e.message
+        );
+
+    }
+
+});
+
+
+/* ===============================
+   バックアップ復元
+================================ */
+
+document.getElementById("restoreBtn")
+?.addEventListener("click", async ()=>{
+
+    try{
+
+        const file =
+        document.getElementById("restoreFile")
+        ?.files?.[0];
+
+        if(!file){
+            alert("JSONファイルを選択してください");
+            return;
+        }
+
+        if(
+            !confirm(
+                "現在のデータに上書きしますか？"
+            )
+        ){
+            return;
+        }
+
+        const text =
+        await file.text();
+
+        const backup =
+        JSON.parse(text);
+
+        for(const col in backup){
+
+            for(const item of backup[col]){
+
+                await setDoc(
+                    doc(db,col,item.id),
+                    item.data
+                );
+
+            }
+
+        }
+
+        alert("復元完了");
+
+    }catch(e){
+
+        console.error(e);
+
+        alert(
+            "復元失敗: "
+            + e.message
+        );
+
+    }
+
+});
