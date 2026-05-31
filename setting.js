@@ -617,14 +617,26 @@ document.getElementById("removeAdminBtn")?.addEventListener("click", async ()=>{
         return;
     }
 
-    if(!confirm(email + " を管理者から削除しますか？")){
-        return;
-    }
-
     const ref = doc(db,"settings","admins");
     const snap = await getDoc(ref);
 
     let emails = snap.data().emails || [];
+
+    // 自分自身は削除不可
+    if(email === auth.currentUser.email){
+        alert("自分自身は削除できません");
+        return;
+    }
+
+    // 最後の管理者は削除不可
+    if(emails.length <= 1){
+        alert("最後の管理者は削除できません");
+        return;
+    }
+
+    if(!confirm(email + " を管理者から削除しますか？")){
+        return;
+    }
 
     emails = emails.filter(e => e !== email);
 
