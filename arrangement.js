@@ -199,6 +199,9 @@ onSnapshot(docRef,snap=>{
 
   memberPositions = data.members || {};
   checkedTeams = data.checkedTeams || {};
+  checkedTeams = data.checkedTeams || {};
+
+  console.log("checkedTeams", checkedTeams);
 
   // チェック状態反映
   document.querySelectorAll(".left-panel input")
@@ -227,22 +230,26 @@ function renderAll(){
   // 左側表示（チェックされたチームのみ）
   teamOrder.forEach(team=>{
 
-    if(!checkedTeams[team]) return;
+  if(!checkedTeams[team]) return;
 
-    teamData[team].forEach(name=>{
+  if(!teamData[team]) return;
 
-      const fullName = team + " " + name;
+  teamData[team].forEach(name=>{
 
-      if(memberPositions[fullName] &&
-         memberPositions[fullName] !== "waiting"){
-        return;
-      }
+    const fullName = team + " " + name;
 
-      createMember(fullName,result);
+    if(
+      memberPositions[fullName] &&
+      memberPositions[fullName] !== "waiting"
+    ){
+      return;
+    }
 
-    });
+    createMember(fullName,result);
 
   });
+
+});
 
   // 教室反映
   orderedMemberList.forEach(name=>{
