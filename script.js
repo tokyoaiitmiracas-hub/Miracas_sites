@@ -107,14 +107,26 @@ window.addEventListener("DOMContentLoaded", () => {
     .then(r => r.json())
     .then(data => {
 
-      document.getElementById("quantitativeText").textContent =
-        data.quantitative;
+      const quantitativeText =
+  document.getElementById("quantitativeText");
 
-      document.getElementById("qualitativeText").textContent =
-        data.qualitative;
+const qualitativeText =
+  document.getElementById("qualitativeText");
 
-      document.getElementById("actionText").textContent =
-        data.action;
+const actionText =
+  document.getElementById("actionText");
+
+if(quantitativeText){
+  quantitativeText.textContent = data.quantitative;
+}
+
+if(qualitativeText){
+  qualitativeText.textContent = data.qualitative;
+}
+
+if(actionText){
+  actionText.textContent = data.action;
+}
 
     });
 
@@ -198,17 +210,23 @@ window.addEventListener("DOMContentLoaded", () => {
 
     if(!isUserAdmin){
 
-      // 入力欄を編集不可
-      quantitativeInput.readOnly = true;
-      qualitativeInput.readOnly = true;
-      actionInput.readOnly = true;
+  if(quantitativeInput){
+    quantitativeInput.readOnly = true;
+  }
 
-      // 保存ボタンだけ非表示
-      if(saveBtn){
-        saveBtn.style.display = "none";
-      }
+  if(qualitativeInput){
+    qualitativeInput.readOnly = true;
+  }
 
-    }
+  if(actionInput){
+    actionInput.readOnly = true;
+  }
+
+  if(saveBtn){
+    saveBtn.style.display = "none";
+  }
+
+}
 
   });
 
