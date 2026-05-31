@@ -1,3 +1,4 @@
+console.log("NEW ARRANGEMENT JS");
 import { db } from "./firebase.js";
 import {
   doc,
