@@ -11,7 +11,7 @@ import {
 
 const docRef = doc(db, "arrangements", "current");
 
-const teamData = {};
+/*const teamData = {};*/
 
 /*export { teamData };*/
 
