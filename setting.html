@@ -54,6 +54,108 @@
 
 <div class="container">
 
+<h2>システム設定</h2>
+
+<hr>
+
+<a href="https://docs.google.com/spreadsheets/d/18eA_soDT5EuqEH5wFAO4Nfjcwe486CvcojvzQgilgB0/edit?usp=sharing">
+    出勤メンバー確認表
+</a>
+
+<hr>
+
+<!-- 利用時間設定 -->
+<div class="setting-box">
+    <h3>利用時間設定</h3>
+
+    開始時間：
+    <input type="number" id="startHour" min="0" max="23"> 時
+    <br>
+    終了時間：
+    <input type="number" id="endHour" min="0" max="23"> 時
+
+    <button id="saveTimeBtn">保存</button>
+</div>
+
+<hr>
+
+<!-- チャット削除 -->
+<div class="admin-button-row">
+    <h3>チャット管理</h3>
+    <button id="deleteChatBtn" class="danger">
+        全チャット削除
+    </button>
+
+    <div class="vertical-divider"></div>
+
+    <h3>配置図管理</h3>
+    <button id="resetArrangementBtn" class="danger reset">
+        配置図リセット
+    </button>
+
+    <div class="vertical-divider"></div>
+
+    <h3>ルーレットリセット</h3>
+    <button id="deleterouletteBtn" class="danger">
+        ユーザー削除
+    </button>
+</div>
+
+<hr>
+
+<!-- ページ制御 -->
+<div class="setting-box">
+    <h3>ページ制御</h3>
+
+    <label>
+        <input type="checkbox" id="lockList">
+        座席表を停止
+    </label>
+    <br>
+
+    <label>
+        <input type="checkbox" id="lockChat">
+        チャットを停止
+    </label>
+    <br>
+
+    <label>
+        <input type="checkbox" id="lockManage">
+        当日名簿を停止
+    </label>
+    <br>
+
+    <label>
+        <input type="checkbox" id="lockArrangement">
+        キャスト配置図を停止
+    </label>
+    <br>
+
+    <label>
+        <input type="checkbox" id="lockCaptain">
+        OC記録を停止
+    </label>
+    <br>
+
+    <label>
+        <input type="checkbox" id="lockRoulette">
+        ルーレットを停止
+    </label>
+    <br>
+
+    <button id="saveLockBtn">保存</button>
+</div>
+
+<hr>
+
+<!-- ログ表示 -->
+<div class="setting-box">
+    <h3>ログ確認</h3>
+    <div id="logList" class="log-box"></div>
+</div>
+
+<hr>
+
 <!-- 管理者管理 -->
 <div class="setting-box">
     <h3>管理者管理</h3>
@@ -81,6 +183,19 @@
 
 <hr>
 
+<!-- チャットリアクション設定 -->
+<div class="setting-box">
+    <h3>チャットリアクション設定（最大5枚）</h3>
+
+    <div id="reactionSelector" class="reaction-selector">
+        <!-- ここに JS で全絵文字画像が表示される -->
+    </div>
+
+    <button id="saveReactionsBtn">保存</button>
+</div>
+
+<hr>
+
 <!-- バックアップ管理 -->
 <div class="setting-box">
 
@@ -104,10 +219,12 @@
 
 </div>
 
+</div>
+</div>
+
 <script type="module" src="settingGuard.js"></script>
 <script type="module" src="layout.js"></script>
 <script>
-/* メニュー開閉用（グローバル） */
 window.toggleMenu = function(){
     const sidebar = document.getElementById("sidebar");
     const page = document.getElementById("page");
