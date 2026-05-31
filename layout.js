@@ -148,6 +148,8 @@ window.addEventListener("DOMContentLoaded", () => {
     /* 管理者アイコン */
     if (isAdmin(user.email) && sidebar) {
 
+      console.log("管理者アイコン追加開始");
+
       if (!document.getElementById("adminSettingIcon")) {
 
         const a = document.createElement("a");
@@ -161,6 +163,7 @@ window.addEventListener("DOMContentLoaded", () => {
         a.appendChild(img);
         sidebar.appendChild(a);
       }
+}
     }
 
     /* 管理者専用ボタン表示 */
