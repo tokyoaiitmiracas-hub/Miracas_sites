@@ -3,22 +3,18 @@ import {
   doc,
   setDoc,
   getDoc,
-  onSnapshot
+  onSnapshot,
+  collection,
+  getDocs
 } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
 const docRef = doc(db, "arrangements", "current");
 
-/*const teamData = {
-  2: ["渡部羽空","藤本英里","溝田莉子","清水晃聖"],
-  T: ["本橋廉土","安藤快","細田奈々","巴瑠聖","大間彩叶","渡辺景太","染谷いおり","山口綾太"],
-  K: ["髙木愁","叶千優","渡辺心菜","鈴木優成","平山遥斗","大鈴淳平","大幡朝陽","安藤愛美"],
-  A: ["兵頭奈優","石川陽菜","中島伶惟","染谷悠斗","河原璃旺","妹尾淳一","ライユウション","阿部龍夏"],
-  I: ["泉哲平","平山頼生","土屋秀俊","小森寛汰","鈴木結衣","石原蒼空","結城ひより","滝谷唯音"]
-};*/
+const teamData = {};
 
 export { teamData };
 
-const teamOrder = ["2","T","K","A","I"];
+let teamOrder = [];
 
 const result = document.getElementById("teamResult");
 
@@ -27,6 +23,35 @@ let checkedTeams = {};
 let draggedName = null;
 
 const orderedMemberList = [];
+
+async function loadTeamsAndMembers(){
+
+  const teamSnap = await getDoc(
+    doc(db,"settings","teams")
+  );
+
+  teamOrder = teamSnap.data().names || [];
+
+  const memberSnap = await getDocs(
+    collection(db,"members")
+  );
+
+  memberSnap.forEach(docSnap=>{
+
+    const name = docSnap.id;
+    const team = docSnap.data().team;
+
+    if(!teamData[team]){
+      teamData[team] = [];
+    }
+
+    teamData[team].push(name);
+
+  });
+
+  orderedMemberList.length = 0;
+
+}
 
 moveAbsenceBox();
 
@@ -244,7 +269,7 @@ function createMember(name,parent){
   // 🔥 チーム判定（先頭1文字）
   const team = name.charAt(0);
 
-  if(["2","T","K","A","I"].includes(team)){
+  if(teamOrder.includes(team)){
     div.classList.add("team-" + team);
   }
 
@@ -255,4 +280,11 @@ function createMember(name,parent){
 /* =========================
    起動
 ========================= */
-ensureDocExists();
+
+(async ()=>{
+
+  await loadTeamsAndMembers();
+
+  await ensureDocExists();
+
+})();
