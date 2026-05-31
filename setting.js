@@ -229,6 +229,115 @@ async function loadLoginLogs(){
     });
 }
 
+
+/* ===============================
+   管理者管理
+================================ */
+
+async function loadAdminList(){
+
+    console.log("管理者一覧読み込み開始");
+
+    const select = document.getElementById("adminSelect");
+
+    console.log("select =", select);
+
+    if(!select) return;
+
+    const snap = await getDoc(doc(db,"settings","admins"));
+
+    console.log("exists =", snap.exists());
+
+    if(!snap.exists()){
+        console.log("settings/admins が存在しません");
+        return;
+    }
+
+    const emails = snap.data().emails || [];
+
+    console.log("emails =", emails);
+
+    select.innerHTML = "";
+
+    emails.forEach(email=>{
+
+        const option = document.createElement("option");
+        option.value = email;
+        option.textContent = email;
+
+        select.appendChild(option);
+
+    });
+
+}
+
+document.getElementById("addAdminBtn")?.addEventListener("click", async ()=>{
+
+    const input = document.getElementById("newAdminEmail");
+
+    const email = input.value.trim();
+
+    if(!email){
+        alert("メールアドレスを入力してください");
+        return;
+    }
+
+    const ref = doc(db,"settings","admins");
+    const snap = await getDoc(ref);
+
+    let emails = [];
+
+    if(snap.exists()){
+        emails = snap.data().emails || [];
+    }
+
+    if(emails.includes(email)){
+        alert("既に管理者です");
+        return;
+    }
+
+    emails.push(email);
+
+    await setDoc(ref,{ emails });
+
+    input.value = "";
+
+    await loadAdminList();
+
+    alert("管理者を追加しました");
+
+});
+
+document.getElementById("removeAdminBtn")?.addEventListener("click", async ()=>{
+
+    const select = document.getElementById("adminSelect");
+
+    const email = select.value;
+
+    if(!email){
+        return;
+    }
+
+    if(!confirm(email + " を管理者から削除しますか？")){
+        return;
+    }
+
+    const ref = doc(db,"settings","admins");
+    const snap = await getDoc(ref);
+
+    let emails = snap.data().emails || [];
+
+    emails = emails.filter(e => e !== email);
+
+    await setDoc(ref,{ emails });
+
+    await loadAdminList();
+
+    alert("削除しました");
+
+});
+
+loadAdminList();
 /* =========================
    チャットリアクション設定
 ========================= */
@@ -528,112 +637,3 @@ saveReactionsBtn?.addEventListener("click", async () => {
 
 // 初期読み込み
 loadReactions();
-
-/* ===============================
-   管理者管理
-================================ */
-
-async function loadAdminList(){
-
-    console.log("管理者一覧読み込み開始");
-
-    const select = document.getElementById("adminSelect");
-
-    console.log("select =", select);
-
-    if(!select) return;
-
-    const snap = await getDoc(doc(db,"settings","admins"));
-
-    console.log("exists =", snap.exists());
-
-    if(!snap.exists()){
-        console.log("settings/admins が存在しません");
-        return;
-    }
-
-    const emails = snap.data().emails || [];
-
-    console.log("emails =", emails);
-
-    select.innerHTML = "";
-
-    emails.forEach(email=>{
-
-        const option = document.createElement("option");
-        option.value = email;
-        option.textContent = email;
-
-        select.appendChild(option);
-
-    });
-
-}
-
-document.getElementById("addAdminBtn")?.addEventListener("click", async ()=>{
-
-    const input = document.getElementById("newAdminEmail");
-
-    const email = input.value.trim();
-
-    if(!email){
-        alert("メールアドレスを入力してください");
-        return;
-    }
-
-    const ref = doc(db,"settings","admins");
-    const snap = await getDoc(ref);
-
-    let emails = [];
-
-    if(snap.exists()){
-        emails = snap.data().emails || [];
-    }
-
-    if(emails.includes(email)){
-        alert("既に管理者です");
-        return;
-    }
-
-    emails.push(email);
-
-    await setDoc(ref,{ emails });
-
-    input.value = "";
-
-    await loadAdminList();
-
-    alert("管理者を追加しました");
-
-});
-
-document.getElementById("removeAdminBtn")?.addEventListener("click", async ()=>{
-
-    const select = document.getElementById("adminSelect");
-
-    const email = select.value;
-
-    if(!email){
-        return;
-    }
-
-    if(!confirm(email + " を管理者から削除しますか？")){
-        return;
-    }
-
-    const ref = doc(db,"settings","admins");
-    const snap = await getDoc(ref);
-
-    let emails = snap.data().emails || [];
-
-    emails = emails.filter(e => e !== email);
-
-    await setDoc(ref,{ emails });
-
-    await loadAdminList();
-
-    alert("削除しました");
-
-});
-
-loadAdminList();
