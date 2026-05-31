@@ -1022,8 +1022,12 @@ async function loadMemberTeams(){
 
 async function loadMembers(){
 
+    console.log("loadMembers開始");
+
     const team =
         document.getElementById("memberTeamSelect")?.value;
+
+    console.log("team =", team);
 
     const memberSelect =
         document.getElementById("memberSelect");
@@ -1032,25 +1036,44 @@ async function loadMembers(){
 
     memberSelect.innerHTML = "";
 
-    const snap = await getDocs(
-        collection(db,"members")
-    );
+    try{
 
-    snap.forEach(docSnap=>{
+        const snap = await getDocs(
+            collection(db,"members")
+        );
 
-        const data = docSnap.data();
+        console.log("件数 =", snap.size);
 
-        if(data.team !== team) return;
+        snap.forEach(docSnap=>{
 
-        const option =
-            document.createElement("option");
+            console.log(
+                "member =",
+                docSnap.id,
+                docSnap.data()
+            );
 
-        option.value = docSnap.id;
-        option.textContent = docSnap.id;
+            const data = docSnap.data();
 
-        memberSelect.appendChild(option);
+            if(data.team !== team) return;
 
-    });
+            const option =
+                document.createElement("option");
+
+            option.value = docSnap.id;
+            option.textContent = docSnap.id;
+
+            memberSelect.appendChild(option);
+
+        });
+
+    }catch(e){
+
+        console.error(
+            "members取得失敗",
+            e
+        );
+
+    }
 
 }
 
