@@ -4,6 +4,7 @@ import {
     doc,
     getDoc,
     setDoc,
+    updateDoc,
     collection,
     getDocs,
     deleteDoc,
@@ -527,3 +528,99 @@ saveReactionsBtn?.addEventListener("click", async () => {
 
 // 初期読み込み
 loadReactions();
+/* ===============================
+   管理者管理
+================================ */
+
+async function loadAdminList(){
+
+    const select = document.getElementById("adminSelect");
+    if(!select) return;
+
+    const snap = await getDoc(doc(db,"settings","admins"));
+
+    if(!snap.exists()) return;
+
+    const emails = snap.data().emails || [];
+
+    select.innerHTML = "";
+
+    emails.forEach(email=>{
+
+        const option = document.createElement("option");
+        option.value = email;
+        option.textContent = email;
+
+        select.appendChild(option);
+
+    });
+
+}
+
+document.getElementById("addAdminBtn")?.addEventListener("click", async ()=>{
+
+    const input = document.getElementById("newAdminEmail");
+
+    const email = input.value.trim();
+
+    if(!email){
+        alert("メールアドレスを入力してください");
+        return;
+    }
+
+    const ref = doc(db,"settings","admins");
+    const snap = await getDoc(ref);
+
+    let emails = [];
+
+    if(snap.exists()){
+        emails = snap.data().emails || [];
+    }
+
+    if(emails.includes(email)){
+        alert("既に管理者です");
+        return;
+    }
+
+    emails.push(email);
+
+    await setDoc(ref,{ emails });
+
+    input.value = "";
+
+    await loadAdminList();
+
+    alert("管理者を追加しました");
+
+});
+
+document.getElementById("removeAdminBtn")?.addEventListener("click", async ()=>{
+
+    const select = document.getElementById("adminSelect");
+
+    const email = select.value;
+
+    if(!email){
+        return;
+    }
+
+    if(!confirm(email + " を管理者から削除しますか？")){
+        return;
+    }
+
+    const ref = doc(db,"settings","admins");
+    const snap = await getDoc(ref);
+
+    let emails = snap.data().emails || [];
+
+    emails = emails.filter(e => e !== email);
+
+    await setDoc(ref,{ emails });
+
+    await loadAdminList();
+
+    alert("削除しました");
+
+});
+
+loadAdminList();
