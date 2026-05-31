@@ -17,11 +17,13 @@ import {
     signOut
 } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
+import { loadAdmins, isAdmin } from "./admin.js";
+
 /* =========================
    管理者チェック
 ========================= */
 
-const adminEmails = [
+/* const adminEmails = [
     "vga29-pc250033@sankogakuen.jp",
     "vga29-pc250006@sankogakuen.jp",
     "vga29-pc250029@sankogakuen.jp",
@@ -35,6 +37,15 @@ onAuthStateChanged(auth, (user)=>{
     if(!user || !adminEmails.includes(user.email)){
         location.href="404.html";
     }
+}); */
+onAuthStateChanged(auth, async (user)=>{
+
+    await loadAdmins();
+
+    if(!user || !isAdmin(user.email)){
+        location.href = "404.html";
+    }
+
 });
 
 /* =========================
