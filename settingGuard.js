@@ -13,5 +13,12 @@ auth.onAuthStateChanged(async user=>{
   if(!isAdmin(user.email)){
     location.href = "home.html";
   }
+  await loadAdmins();
 
+console.log("管理者判定", user.email);
+console.log("isAdmin=", isAdmin(user.email));
+
+if(!isAdmin(user.email)){
+    location.href = "home.html";
+}
 });
