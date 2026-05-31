@@ -1,12 +1,23 @@
-const ADMIN_EMAILS = new Set([
-  "vga29-pc250033@sankogakuen.jp",
-  "vga29-pc250006@sankogakuen.jp",
-  "vga29-pc250029@sankogakuen.jp",
-  "12210295@sankogakuen.jp",
-  "12010311@sankogakuen.jp",
-  "kousei10160926@gmail.com"
-]);
+import { db } from "./firebase.js";
+import {
+  doc,
+  getDoc
+} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-export function isAdmin(email){
-  return ADMIN_EMAILS.has(email);
+let adminEmails = [];
+
+export async function loadAdmins() {
+  try {
+    const snap = await getDoc(doc(db, "settings", "admins"));
+
+    if (snap.exists()) {
+      adminEmails = snap.data().emails || [];
+    }
+  } catch (e) {
+    console.error("管理者取得失敗", e);
+  }
+}
+
+export function isAdmin(email) {
+  return adminEmails.includes(email);
 }
