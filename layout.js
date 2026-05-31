@@ -163,7 +163,7 @@ window.addEventListener("DOMContentLoaded", () => {
         a.appendChild(img);
         sidebar.appendChild(a);
       }
-}
+
     }
 
     /* 管理者専用ボタン表示 */
