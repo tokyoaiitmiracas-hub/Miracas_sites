@@ -327,7 +327,8 @@ onSnapshot(docRef, snap=>{
 import { auth, db } from "./firebase.js";
 import { doc, getDoc }
 from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
-import { isAdmin } from "./admin.js";   // ←ここに移動
+/*import { isAdmin } from "./admin.js";*/
+import { loadAdmins, isAdmin } from "./admin.js";   // ←ここに移動
 
 auth.onAuthStateChanged(async user=>{
 
@@ -337,6 +338,7 @@ auth.onAuthStateChanged(async user=>{
   }
 
   // 管理者は時間制限なし
+  await loadAdmins();
   if(isAdmin(user.email)){
     return;
   }
