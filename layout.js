@@ -34,6 +34,7 @@ const adminEmails = [
   "vga29-pc250029@sankogakuen.jp",
   "vga29-pc250064@sankogakuen.jp",
   "vga29-pc250088@sankogakuen.jp",
+  "vga29-pc260080@sankogakuen.jp",
   "12210295@sankogakuen.jp",
   "12010311@sankogakuen.jp",
   "kousei10160926@gmail.com",
