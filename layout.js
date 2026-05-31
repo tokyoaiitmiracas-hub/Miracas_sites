@@ -65,7 +65,8 @@ async function forceLogout() {
   location.href = "index.html";
 }
 
-import { isAdmin } from "./admin.js";
+/*import { isAdmin } from "./admin.js";*/
+import { loadAdmins, isAdmin } from "./admin.js";
 /* ===============================
    DOM読み込み後
 ================================ */
@@ -84,6 +85,11 @@ window.addEventListener("DOMContentLoaded", () => {
       location.href = "index.html";
       return;
     }
+
+    await loadAdmins();
+
+    console.log("ログインメール:", user.email);
+    console.log("管理者判定:", isAdmin(user.email));
 
     // 🔥 セッション期限チェック
     if (isSessionExpired()) {
