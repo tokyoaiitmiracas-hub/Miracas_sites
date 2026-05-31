@@ -25,54 +25,63 @@ let draggedName = null;
 
 const orderedMemberList = [];
 
+
 async function loadTeamsAndMembers(){
 
-  const teamSnap = await getDoc(
-    doc(db,"settings","teams")
-  );
+  try{
 
-  console.log("teams doc", teamSnap.data());
+    const teamSnap = await getDoc(
+      doc(db,"settings","teams")
+    );
 
-  teamOrder = teamSnap.data().names || [];
+    console.log("teams doc", teamSnap.data());
 
-  const memberSnap = await getDocs(
-    collection(db,"members")
-  );
+    teamOrder = teamSnap.data().names || [];
 
-  console.log("members count", memberSnap.size);
+    const memberSnap = await getDocs(
+      collection(db,"members")
+    );
 
-  memberSnap.forEach(docSnap=>{
+    console.log("members count", memberSnap.size);
 
-    const name = docSnap.id;
-    const team = docSnap.data().team;
+    memberSnap.forEach(docSnap=>{
 
-    if(!teamData[team]){
-      teamData[team] = [];
-    }
+      const name = docSnap.id;
+      const team = docSnap.data().team;
 
-    teamData[team].push(name);
+      if(!teamData[team]){
+        teamData[team] = [];
+      }
 
-  });
-
-  orderedMemberList.length = 0;
-
-  teamOrder.forEach(team=>{
-
-    if(!teamData[team]) return;
-
-    teamData[team].forEach(name=>{
-
-      orderedMemberList.push(
-        team + " " + name
-      );
+      teamData[team].push(name);
 
     });
 
-  });
+    orderedMemberList.length = 0;
 
-  console.log("teamOrder", teamOrder);
-  console.log("teamData", teamData);
-  console.log("orderedMemberList", orderedMemberList);
+    teamOrder.forEach(team=>{
+
+      if(!teamData[team]) return;
+
+      teamData[team].forEach(name=>{
+
+        orderedMemberList.push(
+          team + " " + name
+        );
+
+      });
+
+    });
+
+    console.log("teamOrder", teamOrder);
+    console.log("teamData", teamData);
+    console.log("orderedMemberList", orderedMemberList);
+
+  }catch(e){
+
+    console.error("loadTeamsAndMembers ERROR", e);
+
+  }
 
 }
 
