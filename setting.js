@@ -982,3 +982,137 @@ document.getElementById("removeTeamBtn")
 });
 
 loadTeamList();
+
+/* ===============================
+   メンバー管理
+================================ */
+
+async function loadMemberTeams(){
+
+    const teamSelect =
+        document.getElementById("memberTeamSelect");
+
+    if(!teamSelect) return;
+
+    const snap = await getDoc(
+        doc(db,"settings","teams")
+    );
+
+    if(!snap.exists()) return;
+
+    const teams = snap.data().names || [];
+
+    teamSelect.innerHTML = "";
+
+    teams.forEach(team=>{
+
+        const option =
+            document.createElement("option");
+
+        option.value = team;
+        option.textContent = team;
+
+        teamSelect.appendChild(option);
+
+    });
+
+    loadMembers();
+
+}
+
+async function loadMembers(){
+
+    const team =
+        document.getElementById("memberTeamSelect")?.value;
+
+    const memberSelect =
+        document.getElementById("memberSelect");
+
+    if(!team || !memberSelect) return;
+
+    memberSelect.innerHTML = "";
+
+    const snap = await getDocs(
+        collection(db,"members")
+    );
+
+    snap.forEach(docSnap=>{
+
+        const data = docSnap.data();
+
+        if(data.team !== team) return;
+
+        const option =
+            document.createElement("option");
+
+        option.value = docSnap.id;
+        option.textContent = docSnap.id;
+
+        memberSelect.appendChild(option);
+
+    });
+
+}
+
+document
+.getElementById("memberTeamSelect")
+?.addEventListener("change",loadMembers);
+
+document
+.getElementById("addMemberBtn")
+?.addEventListener("click",async()=>{
+
+    const team =
+        document.getElementById("memberTeamSelect").value;
+
+    const name =
+        document.getElementById("newMemberName")
+        .value.trim();
+
+    if(!name){
+        alert("名前を入力してください");
+        return;
+    }
+
+    await setDoc(
+        doc(db,"members",name),
+        {
+            team
+        }
+    );
+
+    document.getElementById(
+        "newMemberName"
+    ).value = "";
+
+    await loadMembers();
+
+    alert("追加しました");
+
+});
+
+document
+.getElementById("removeMemberBtn")
+?.addEventListener("click",async()=>{
+
+    const name =
+        document.getElementById("memberSelect")
+        .value;
+
+    if(!name) return;
+
+    if(!confirm(name+" を削除しますか？")){
+        return;
+    }
+
+    await deleteDoc(
+        doc(db,"members",name)
+    );
+
+    await loadMembers();
+
+    alert("削除しました");
+
+});
+
+loadMemberTeams();
