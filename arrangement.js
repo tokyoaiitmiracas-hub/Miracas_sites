@@ -31,11 +31,15 @@ async function loadTeamsAndMembers(){
     doc(db,"settings","teams")
   );
 
+  console.log("teams doc", teamSnap.data());
+
   teamOrder = teamSnap.data().names || [];
 
   const memberSnap = await getDocs(
     collection(db,"members")
   );
+
+  console.log("members count", memberSnap.size);
 
   memberSnap.forEach(docSnap=>{
 
@@ -52,19 +56,23 @@ async function loadTeamsAndMembers(){
 
   orderedMemberList.length = 0;
 
-teamOrder.forEach(team=>{
+  teamOrder.forEach(team=>{
 
-  if(!teamData[team]) return;
+    if(!teamData[team]) return;
 
-  teamData[team].forEach(name=>{
+    teamData[team].forEach(name=>{
 
-    orderedMemberList.push(
-      team + " " + name
-    );
+      orderedMemberList.push(
+        team + " " + name
+      );
+
+    });
 
   });
 
-});
+  console.log("teamOrder", teamOrder);
+  console.log("teamData", teamData);
+  console.log("orderedMemberList", orderedMemberList);
 
 }
 
