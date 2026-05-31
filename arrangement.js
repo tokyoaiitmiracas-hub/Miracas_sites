@@ -218,6 +218,8 @@ onSnapshot(docRef,snap=>{
 ========================= */
 function renderAll(){
 
+  console.log("renderAll実行");
+
   // 教室初期化
   document.querySelectorAll(".class-box")
     .forEach(box=>{
@@ -230,9 +232,22 @@ function renderAll(){
   // 左側表示（チェックされたチームのみ）
   teamOrder.forEach(team=>{
 
+  console.log(
+    "team",
+    team,
+    "checked",
+    checkedTeams[team]
+  );
+
   if(!checkedTeams[team]) return;
 
   if(!teamData[team]) return;
+
+  console.log(
+  "表示対象",
+  team,
+  teamData[team]
+);
 
   teamData[team].forEach(name=>{
 
