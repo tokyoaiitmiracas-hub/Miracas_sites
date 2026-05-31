@@ -857,3 +857,128 @@ document.getElementById("restoreBtn")
     }
 
 });
+
+/* ===============================
+   チーム管理
+================================ */
+
+async function loadTeamList(){
+
+    const select =
+    document.getElementById("teamSelect");
+
+    if(!select) return;
+
+    const snap =
+    await getDoc(
+        doc(db,"settings","teams")
+    );
+
+    select.innerHTML = "";
+
+    if(!snap.exists()) return;
+
+    const teams =
+    snap.data().names || [];
+
+    teams.forEach(team=>{
+
+        const option =
+        document.createElement("option");
+
+        option.value = team;
+        option.textContent = team;
+
+        select.appendChild(option);
+
+    });
+
+}
+document.getElementById("addTeamBtn")
+?.addEventListener("click", async ()=>{
+
+    const input =
+    document.getElementById("newTeamName");
+
+    const team =
+    input.value.trim();
+
+    if(!team){
+        alert("チーム名を入力してください");
+        return;
+    }
+
+    const ref =
+    doc(db,"settings","teams");
+
+    const snap =
+    await getDoc(ref);
+
+    let teams = [];
+
+    if(snap.exists()){
+        teams = snap.data().names || [];
+    }
+
+    if(teams.includes(team)){
+        alert("既に存在します");
+        return;
+    }
+
+    teams.push(team);
+
+    await setDoc(ref,{
+        names: teams
+    });
+
+    input.value = "";
+
+    await loadTeamList();
+
+    alert("追加しました");
+
+});
+document.getElementById("removeTeamBtn")
+?.addEventListener("click", async ()=>{
+
+    const select =
+    document.getElementById("teamSelect");
+
+    const team =
+    select.value;
+
+    if(!team) return;
+
+    if(
+        !confirm(
+            team + " を削除しますか？"
+        )
+    ){
+        return;
+    }
+
+    const ref =
+    doc(db,"settings","teams");
+
+    const snap =
+    await getDoc(ref);
+
+    let teams =
+    snap.data().names || [];
+
+    teams =
+    teams.filter(
+        t => t !== team
+    );
+
+    await setDoc(ref,{
+        names: teams
+    });
+
+    await loadTeamList();
+
+    alert("削除しました");
+
+});
+
+loadTeamList();

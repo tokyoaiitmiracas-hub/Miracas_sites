@@ -1,3 +1,10 @@
+import { db } from "./firebase.js";
+
+import {
+  doc,
+  getDoc
+} from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
 /* ===========================
    GAS URL
 =========================== */
@@ -119,7 +126,11 @@ function jsonpPost(url, data){
 =========================== */
 
 document.addEventListener("DOMContentLoaded", async ()=>{
+
   await loadExistingDates();
+
+  await loadTeams();
+
   applyDateStyles(existingDates);
 
   initDaySelect();
@@ -127,7 +138,7 @@ document.addEventListener("DOMContentLoaded", async ()=>{
   initTeams();
   initPlaces();
 
-  initCalendar(); // ←これが止まらなくなる
+  initCalendar();
 
   disableEditor();
 
@@ -365,7 +376,39 @@ function initNames(){
    チームプルダウン
 =========================== */
 
-const teamList = ["","Tチーム","Kチーム","Aチーム","Iチーム","全チーム"];
+let teamList = [];
+
+async function loadTeams(){
+
+  try{
+
+    const snap =
+      await getDoc(doc(db,"settings","teams"));
+
+    if(snap.exists()){
+
+      const teams =
+        snap.data().names || [];
+
+      teamList = [""];
+
+      teams.forEach(team=>{
+
+        teamList.push(team + "チーム");
+
+      });
+
+      teamList.push("全チーム");
+
+    }
+
+  }catch(err){
+
+    console.error("チーム取得失敗", err);
+
+  }
+
+}
 
 function initTeams(){
 
