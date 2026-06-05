@@ -779,3 +779,6 @@ async function generateSummary(){
 
   }
 }
+window.createSheet = createSheet;
+window.saveEvent = saveEvent;
+window.generateSummary = generateSummary;
