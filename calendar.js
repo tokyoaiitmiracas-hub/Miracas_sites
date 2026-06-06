@@ -513,7 +513,7 @@ function initPlaces(){
    - レスポンスで {result:"ok"} を確認
    - 保存内容をコンソールに詳細出力
 =========================== */
-function val(id){
+function getValue(id){
   const el = document.getElementById(id);
   return el ? el.value : "";
 }
