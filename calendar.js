@@ -725,10 +725,6 @@ async function savePart4(){
   return jsonpPost(GAS_URL, data);
 }
 
-function val(id){
-  return document.getElementById(id)?.value || "";
-}
-
 async function generateSummary(){
 
   const texts = [
